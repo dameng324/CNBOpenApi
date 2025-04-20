@@ -1,0 +1,11 @@
+# CNBOpenApi.Model.DtoGetActivityWorkflowDetailRsp
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**ActivityWorkflowDatas** | [**List&lt;DtoActivityWorkflowData&gt;**](DtoActivityWorkflowData.md) |  | [optional] 
+**NextOffset** | **string** |  | [optional] 
+
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+
