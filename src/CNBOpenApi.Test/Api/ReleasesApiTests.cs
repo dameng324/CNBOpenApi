@@ -77,10 +77,10 @@ namespace CNBOpenApi.Test.Api
         /// <summary>
         /// Test GetLatestRelease
         /// </summary>
-        [Fact (Skip = "not implemented")]
+        [Fact ()]
         public async Task GetLatestReleaseAsyncTest()
         {
-            string repo = default!;
+            string repo = "dameng324/WindRangerRelease";
             var response = await _instance.GetLatestReleaseAsync(repo);
             var model = response.Ok();
             Assert.IsType<ApiRelease>(model);

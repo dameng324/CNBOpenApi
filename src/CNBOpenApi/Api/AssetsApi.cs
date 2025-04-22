@@ -193,31 +193,6 @@ namespace CNBOpenApi.Api
         Task<IGetReleasesAssetApiResponse?> GetReleasesAssetOrDefaultAsync(string fileName, string repo, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 获取指定用户的用户头像
-        /// </summary>
-        /// <remarks>
-        /// 访问令牌调用此接口需包含以下权限  account-profile:r
-        /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">头像大小，取 s 或者 l</param>
-        /// <param name="username">User Name</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserAvatarApiResponse"/>&gt;</returns>
-        Task<IGetUserAvatarApiResponse> GetUserAvatarAsync(string size, string username, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// 获取指定用户的用户头像
-        /// </summary>
-        /// <remarks>
-        /// 访问令牌调用此接口需包含以下权限  account-profile:r
-        /// </remarks>
-        /// <param name="size">头像大小，取 s 或者 l</param>
-        /// <param name="username">User Name</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserAvatarApiResponse"/>?&gt;</returns>
-        Task<IGetUserAvatarApiResponse?> GetUserAvatarOrDefaultAsync(string size, string username, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
         /// 发起一个确认 files 的请求，上传的图片要调用此接口才能生效
         /// </summary>
         /// <remarks>
@@ -687,19 +662,10 @@ namespace CNBOpenApi.Api
         }
 
         /// <summary>
-        /// The event raised after the server response
-        /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetUserAvatar;
-
-        /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
         public event EventHandler<ExceptionEventArgs>? OnErrorGetUserAvatar;
 
-        internal void ExecuteOnGetUserAvatar(AssetsApi.GetUserAvatarApiResponse apiResponse)
-        {
-            OnGetUserAvatar?.Invoke(this, new ApiResponseEventArgs(apiResponse));
-        }
 
         internal void ExecuteOnErrorGetUserAvatar(Exception exception)
         {
@@ -2139,29 +2105,6 @@ namespace CNBOpenApi.Api
         }
 
         /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="size"></param>
-        /// <param name="username"></param>
-        private void AfterGetUserAvatarDefaultImplementation(IGetUserAvatarApiResponse apiResponseLocalVar, string size, string username)
-        {
-            bool suppressDefaultLog = false;
-            AfterGetUserAvatar(ref suppressDefaultLog, apiResponseLocalVar, size, username);
-            if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="suppressDefaultLog"></param>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="size"></param>
-        /// <param name="username"></param>
-        partial void AfterGetUserAvatar(ref bool suppressDefaultLog, IGetUserAvatarApiResponse apiResponseLocalVar, string size, string username);
-
-        /// <summary>
         /// Logs exceptions that occur while retrieving the server response
         /// </summary>
         /// <param name="exceptionLocalVar"></param>
@@ -2187,84 +2130,6 @@ namespace CNBOpenApi.Api
         /// <param name="size"></param>
         /// <param name="username"></param>
         partial void OnErrorGetUserAvatar(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string size, string username);
-
-        /// <summary>
-        /// 获取指定用户的用户头像 访问令牌调用此接口需包含以下权限  account-profile:r
-        /// </summary>
-        /// <param name="size">头像大小，取 s 或者 l</param>
-        /// <param name="username">User Name</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserAvatarApiResponse"/>&gt;</returns>
-        public async Task<IGetUserAvatarApiResponse?> GetUserAvatarOrDefaultAsync(string size, string username, System.Threading.CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await GetUserAvatarAsync(size, username, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 获取指定用户的用户头像 访问令牌调用此接口需包含以下权限  account-profile:r
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="size">头像大小，取 s 或者 l</param>
-        /// <param name="username">User Name</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserAvatarApiResponse"/>&gt;</returns>
-        public async Task<IGetUserAvatarApiResponse> GetUserAvatarAsync(string size, string username, System.Threading.CancellationToken cancellationToken = default)
-        {
-            UriBuilder uriBuilderLocalVar = new UriBuilder();
-
-            try
-            {
-                ValidateGetUserAvatar(size, username);
-
-                FormatGetUserAvatar(ref size, ref username);
-
-                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
-                {
-                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
-                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
-                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
-                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users/{username}/avatar/{size}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/users/{username}/avatar/{size}");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bsize%7D", Uri.EscapeDataString(size.ToString()));
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Busername%7D", Uri.EscapeDataString(username.ToString()));
-
-                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
-
-                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
-
-                    DateTime requestedAtLocalVar = DateTime.UtcNow;
-
-                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
-                    {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
-                        ILogger<GetUserAvatarApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetUserAvatarApiResponse>();
-
-                        GetUserAvatarApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users/{username}/avatar/{size}", requestedAtLocalVar, _jsonSerializerOptions);
-
-                        AfterGetUserAvatarDefaultImplementation(apiResponseLocalVar, size, username);
-
-                        Events.ExecuteOnGetUserAvatar(apiResponseLocalVar);
-
-                        return apiResponseLocalVar;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                OnErrorGetUserAvatarDefaultImplementation(e, "/users/{username}/avatar/{size}", uriBuilderLocalVar.Path, size, username);
-                Events.ExecuteOnErrorGetUserAvatar(e);
-                throw;
-            }
-        }
 
         partial void FormatPutFiles(ref string userIdKey, ref string randomUUID, ref string fileName, ref string token, ref string repo);
 

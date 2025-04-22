@@ -1,0 +1,1 @@
+docker run --rm -v "$(pwd):/local" openapitools/openapi-generator-cli generate -i https://api.cnb.cool/swagger.json -g csharp  -o /local --skip-validate-spec --package-name CNBOpenApi

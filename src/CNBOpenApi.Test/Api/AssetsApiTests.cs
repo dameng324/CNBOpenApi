@@ -121,17 +121,6 @@ namespace CNBOpenApi.Test.Api
         }
 
         /// <summary>
-        /// Test GetUserAvatar
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task GetUserAvatarAsyncTest()
-        {
-            string size = default!;
-            string username = default!;
-            await _instance.GetUserAvatarAsync(size, username);
-        }
-
-        /// <summary>
         /// Test PutFiles
         /// </summary>
         [Fact (Skip = "not implemented")]

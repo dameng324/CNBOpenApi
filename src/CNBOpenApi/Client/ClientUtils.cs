@@ -374,22 +374,7 @@ namespace CNBOpenApi.Client
         /// <summary>
         /// The base path of the API
         /// </summary>
-        public const string BASE_ADDRESS = "http://localhost";
-
-        /// <summary>
-        /// The scheme of the API
-        /// </summary>
-        public const string SCHEME = "http";
-
-        /// <summary>
-        /// The context path of the API
-        /// </summary>
-        public const string CONTEXT_PATH = "";
-
-        /// <summary>
-        /// The host of the API
-        /// </summary>
-        public const string HOST = "localhost";
+        public const string BASE_ADDRESS = "https://api.cnb.cool";
 
         /// <summary>
         /// The format to use for DateTime serialization

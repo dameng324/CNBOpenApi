@@ -53,7 +53,7 @@ namespace CNBOpenApi.Test.Api
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
             .ConfigureApi((context, services, options) =>
             {
-                string apiKeyTokenValue1 = context.Configuration["<token>"] ?? throw new Exception("Token not found.");
+                string apiKeyTokenValue1 = Environment.GetEnvironmentVariable("CNB_TOKEN") ?? throw new Exception("Token not found.");
                 ApiKeyToken apiKeyToken1 = new(apiKeyTokenValue1, ClientUtils.ApiKeyHeader.Authorization, timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(apiKeyToken1);
             });
