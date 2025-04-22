@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{7C68
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{39D67EB8-D091-41B2-A13D-5178CF22804D}"
 	ProjectSection(SolutionItems) = preProject
-		pack.yml = pack.yml
+		.github\workflows\pack.yml = .github\workflows\pack.yml
 	EndProjectSection
 EndProject
 Global
