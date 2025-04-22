@@ -6,6 +6,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNBOpenApi", "src\CNBOpenAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNBOpenApi.Test", "src\CNBOpenApi.Test\CNBOpenApi.Test.csproj", "{19F1DEBC-DE5E-4517-8062-F000CD499087}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{7C68829A-37F9-4C06-A4D5-06C1EDFEE742}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{39D67EB8-D091-41B2-A13D-5178CF22804D}"
+	ProjectSection(SolutionItems) = preProject
+		pack.yml = pack.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{39D67EB8-D091-41B2-A13D-5178CF22804D} = {7C68829A-37F9-4C06-A4D5-06C1EDFEE742}
 	EndGlobalSection
 EndGlobal

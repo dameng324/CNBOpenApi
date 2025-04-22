@@ -1,0 +1,45 @@
+﻿name: Release Tag
+
+on:
+  push:
+    tags:  
+      - "v[0-9]+.[0-9]+.[0-9]+"          # v1.0.0
+      - "v[0-9]+.[0-9]+.[0-9]+-[a-zA-Z]+" # v1.0.0-preview
+  workflow_dispatch:
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pack
+        run: dotnet pack ./src/CNBOpenApi -o ./nugets -p:Version=${{ github.ref_name.replace('v', '') }}
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nugets
+          path: ./nugets
+      - name: Publish NuGet package
+        run: dotnet nuget push "./nugets/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+
+  draft-release:
+    needs: [ pack ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download nugets Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: nugets
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          draft: true
+          files: |
+            *.nupkg
